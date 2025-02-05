@@ -17,6 +17,10 @@ public class PlayerBehavior : MonoBehaviour
     //LayerMask is set in the Inspector and is used for collider detection
     public LayerMask groundLayer;
 
+    //bullet stores the Bullet prefab
+    public GameObject bullet;
+    public float bulletSpeed = 100f;
+
     private float vInput;
     private float hInput;
 
@@ -58,8 +62,8 @@ public class PlayerBehavior : MonoBehaviour
 
         }
     }
-        void FixedUpdate() //frame rate independent
-    {
+    void FixedUpdate() //frame rate independent
+    {   
         //Input.Get.KeyDown () returns a bool value
         //the method accepts a key parameter as either a string or a KeyCode
         //we check for KeyCode.Space
@@ -83,6 +87,24 @@ public class PlayerBehavior : MonoBehaviour
 
         //calles MoveRotate on the _rb component fr/ Vector3 component and applies force "under the hood" ??
         _rb.MoveRotation(_rb.rotation * angleRot);
+
+        //checks that Input.GetMouseButtonDown () returns true
+        //0 is for the left mouse button
+        if(Input.GetMouseButtonDown(0))
+        {
+            //Instantiate() passes the bullet prefab to assign a GameObject to newBullet
+            //use capsule's posiiton to place new bullet in fron of the player to avoid collisions
+            //append as GameObject at the end to explicitly cast the returned object to the same type as newBullet
+            GameObject newBullet = Instantiate(bullet, this.transform.position +
+                new Vector3(1, 0, 0), this.transform.rotation) as GameObject;
+
+            //GetComoponent() returns and stores the Rigidbody component on newBullet
+            Rigidbody bulletRB = newBullet.GetComponent<Rigidbody>();
+
+            //set velocity property of Rigidbody component to player's transform.forwad direction x bulletSpeed
+            //velocity keeps our bullets in a straigh-ish line
+            bulletRB.velocity = this.transform.forward.normalized * bulletSpeed;
+        }
     }
 
     private bool IsGrounded()

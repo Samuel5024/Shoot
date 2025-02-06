@@ -30,10 +30,8 @@ public class PlayerBehavior : MonoBehaviour
     //stores the player's Capsule Collider component
     private CapsuleCollider _col;
     //create flags for jump & shoot functions
-    private bool jump;
-    private bool shoot;
-
-    //fires when a script is initialized; the player hits PLAY
+    private bool jump = false; 
+    private bool shoot = false;
     void Start()
     {
         //checks if Rigidbody exists on the GameObject the script is attached to
@@ -53,7 +51,7 @@ public class PlayerBehavior : MonoBehaviour
         this.transform.Rotate(Vector3.up * hInput * Time.deltaTime);
         */
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded()) 
         { 
             jump = true;
         }
@@ -69,7 +67,7 @@ public class PlayerBehavior : MonoBehaviour
         //the method accepts a key parameter as either a string or a KeyCode
         //we check for KeyCode.Space
 
-        if(IsGrounded() && jump )
+        if(jump)
         {
             //take this out of fixed update
             //passing the Vector3 and ForceMode parameters to RigidBody.AddForce() makes the player jump

@@ -92,14 +92,18 @@ public class PlayerBehavior : MonoBehaviour
 
         //checks that Input.GetMouseButtonDown () returns true
         //0 is for the left mouse button
-        if (shoot)
+        if ( shoot)
         {
             shoot = false;
             //Instantiate() passes the bullet prefab to assign a GameObject to newBullet
             //use capsule's posiiton to place new bullet in fron of the player to avoid collisions
             //append as GameObject at the end to explicitly cast the returned object to the same type as newBullet
+
             GameObject newBullet = Instantiate(bullet, this.transform.position +
-                new Vector3(1, 0, 0), this.transform.rotation) as GameObject;
+                transform.right, this.transform.rotation) as GameObject; 
+
+            /*GameObject newBullet = Instantiate(bullet, this.transform.position +
+                new Vector3(1, 0, 0), this.transform.rotation) as GameObject;*/                                  //this code will make your bullets shoot from all over the place. Use the code above.
 
             //GetComoponent() returns and stores the Rigidbody component on newBullet
             Rigidbody bulletRB = newBullet.GetComponent<Rigidbody>();

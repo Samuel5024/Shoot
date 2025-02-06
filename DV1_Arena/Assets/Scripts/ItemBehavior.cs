@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class ItemBehavior : MonoBehaviour
 {
+    //new variable of the GameBehavior type
     public GameBehavior gameManager;
 
     void Start()
     {
-        //
-        gameManager = GameObject.Find("Game Manager:")
-            .GetComponent<GameBehavior>();
+        //Start() initializes gameManager by looking it up in the scene with Find() & ading a call to GetComponent
+        gameManager = GameObject.Find("GameManager").GetComponent<GameBehavior>();
     }
     //unity automatically calls OnCollision when another object (isTrigger turned off) runs into the item prefab
     void OnCollisionEnter(Collision collision)
@@ -24,6 +24,7 @@ public class ItemBehavior : MonoBehaviour
             //prints that we collected the item
             Debug.Log("Item Collected!");
 
+            //increment items property after Item prefab is destroyed
             gameManager.Items += 1;
         }
     }

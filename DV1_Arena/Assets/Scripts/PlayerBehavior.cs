@@ -49,18 +49,6 @@ public class PlayerBehavior : MonoBehaviour
         this.transform.Translate(Vector3.forward * vInput * Time.deltaTime);
         this.transform.Rotate(Vector3.up * hInput * Time.deltaTime);
         */
-
-        //Input.Get.KeyDown () returns a bool value
-        //the method accepts a key parameter as either a string or a KeyCode
-        //we check for KeyCode.Space
-        //check wherer IsGrounded returns true and the spacebar is pressed before executing the jump code
-        if (IsGrounded() && Input.GetKeyDown(KeyCode.Space))
-        {
-
-            //passing the Vector3 and ForceMode parameters to RigidBody.AddForce() makes the player jump
-            _rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
-
-        }
     }
     void FixedUpdate() //frame rate independent
     {   

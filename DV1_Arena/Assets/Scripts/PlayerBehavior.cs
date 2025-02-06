@@ -29,6 +29,9 @@ public class PlayerBehavior : MonoBehaviour
 
     //stores the player's Capsule Collider component
     private CapsuleCollider _col;
+    //create flags for jump & shoot functions
+    private bool jump;
+    private bool shoot;
 
     //fires when a script is initialized; the player hits PLAY
     void Start()
@@ -49,6 +52,16 @@ public class PlayerBehavior : MonoBehaviour
         this.transform.Translate(Vector3.forward * vInput * Time.deltaTime);
         this.transform.Rotate(Vector3.up * hInput * Time.deltaTime);
         */
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        { 
+            jump = true;
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            shoot = true;
+        }
     }
     void FixedUpdate() //frame rate independent
     {   
@@ -56,12 +69,13 @@ public class PlayerBehavior : MonoBehaviour
         //the method accepts a key parameter as either a string or a KeyCode
         //we check for KeyCode.Space
 
-        /*if(IsGrounded() && Input.GetKeyDown(KeyCode.Space))
+        if(IsGrounded() && jump )
         {
             //take this out of fixed update
             //passing the Vector3 and ForceMode parameters to RigidBody.AddForce() makes the player jump
             _rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
-        }*/
+            jump = false;
+        }
 
         //Vector3 stores left and right rotation
         Vector3 rotation = Vector3.up * hInput; 
@@ -78,8 +92,9 @@ public class PlayerBehavior : MonoBehaviour
 
         //checks that Input.GetMouseButtonDown () returns true
         //0 is for the left mouse button
-        if(Input.GetMouseButtonDown(0))
+        if (shoot)
         {
+            shoot = false;
             //Instantiate() passes the bullet prefab to assign a GameObject to newBullet
             //use capsule's posiiton to place new bullet in fron of the player to avoid collisions
             //append as GameObject at the end to explicitly cast the returned object to the same type as newBullet
